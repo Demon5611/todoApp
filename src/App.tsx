@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import TodoList from "./TodoList";
 
 const App: React.FC = () => {
-  const [tasks, setTasks] = useState<{ task: string; completed: boolean }[]>([]);
+  const [tasks, setTasks] = useState<{ task: string; completed: boolean }[]>(
+    []
+  );
   const [newTask, setNewTask] = useState("");
 
   const addTask = () => {
@@ -20,7 +22,8 @@ const App: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="App">
+      <h1>todos</h1>
       <input
         type="text"
         value={newTask}
@@ -29,6 +32,15 @@ const App: React.FC = () => {
       />
       <button onClick={addTask}>Add Task</button>
       <TodoList tasks={tasks} toggleTask={toggleTask} />
+      <div className="status-bar">
+        <span style={{marginBottom: '15px'}}>{tasks.length} items left</span>
+        <div>
+          <button>All</button>
+          <button>Active</button>
+          <button>Completed</button>
+        </div>
+        <button>Clear completed</button>
+      </div>
     </div>
   );
 };

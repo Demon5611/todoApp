@@ -1,5 +1,4 @@
-import React from 'react';
-import TodoItem from './TodoItem';
+import React from "react";
 
 interface TodoListProps {
   tasks: { task: string; completed: boolean }[];
@@ -8,14 +7,26 @@ interface TodoListProps {
 
 const TodoList: React.FC<TodoListProps> = ({ tasks, toggleTask }) => {
   return (
-    <ul>
-      {tasks.map((todo, index) => (
-        <TodoItem
+    <ul className="todo-list">
+      {tasks.map((task, index) => (
+        <li
           key={index}
-          task={todo.task}
-          completed={todo.completed}
-          toggleTask={() => toggleTask(index)}
-        />
+          className={`todo-item ${task.completed ? "completed" : ""}`}
+        >
+          <label>
+            <input
+              type="checkbox"
+              checked={task.completed}
+              onChange={() => toggleTask(index)}
+            />
+            <span className="checkbox">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20.285 6.11l-11.667 11.667-4.903-4.903 1.586-1.586 3.317 3.317 10.081-10.081z"/>
+              </svg>
+            </span>
+            {task.task}
+          </label>
+        </li>
       ))}
     </ul>
   );
