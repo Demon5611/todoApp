@@ -9,10 +9,10 @@ test('adds a new task', async () => {
   const inputElement = screen.getByPlaceholderText(/what needs to be done/i);
   fireEvent.change(inputElement, { target: { value: 'New Task' } });
   
-  // Симулируем отправку формы
+
   fireEvent.submit(inputElement);
   
-  // Ожидаем, что задача добавлена и отображается в списке
+
   const taskElement = await screen.findByText('New Task');
   expect(taskElement).toBeInTheDocument();
 });
@@ -23,7 +23,7 @@ test('toggles task completion', async () => {
   const inputElement = screen.getByPlaceholderText(/what needs to be done/i);
   fireEvent.change(inputElement, { target: { value: 'Toggle Task' } });
   
-  // Симулируем отправку формы
+
   fireEvent.submit(inputElement);
   
   const checkbox = await screen.findByRole('checkbox');
