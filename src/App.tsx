@@ -1,45 +1,45 @@
-import React, { useState } from "react";
+import React from "react";
 import TodoList from "./TodoList";
+import { useTasks } from "./useTasks";
 
 const App: React.FC = () => {
-  const [tasks, setTasks] = useState<{ task: string; completed: boolean }[]>(
-    []
-  );
-  const [newTask, setNewTask] = useState("");
+  const { tasks, newTask, setNewTask, addTask, toggleTask } = useTasks();
 
-  const addTask = () => {
-    if (newTask.trim()) {
-      setTasks([...tasks, { task: newTask, completed: false }]);
-      setNewTask("");
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      addTask();
     }
   };
 
-  const toggleTask = (index: number) => {
-    const newTasks = tasks.map((task, i) =>
-      i === index ? { ...task, completed: !task.completed } : task
-    );
-    setTasks(newTasks);
-  };
-
   return (
-    <div className="App">
+    <div className="app">
       <h1>todos</h1>
-      <input
-        type="text"
-        value={newTask}
-        onChange={(e) => setNewTask(e.target.value)}
-        placeholder="What needs to be done?"
-      />
-      <button onClick={addTask}>Add Task</button>
-      <TodoList tasks={tasks} toggleTask={toggleTask} />
+      <div className="wrapper">
+        <input
+          type="text"
+          value={newTask}
+          onChange={(e) => setNewTask(e.target.value)}
+          onKeyPress={handleKeyPress}
+          placeholder="What needs to be done?"
+        />
+        <TodoList tasks={tasks} toggleTask={toggleTask} />
+      </div>
       <div className="status-bar">
-        <span style={{marginBottom: '15px'}}>{tasks.length} items left</span>
+        <span style={{ marginBottom: "15px" }}>{tasks.length} items left</span>
         <div>
-          <button>All</button>
-          <button>Active</button>
-          <button>Completed</button>
+          <button className={`all ${tasks.length > 0 ? "active" : ""}`} type="button" >
+            All
+          </button>
+          <button type="button" className="others">
+            Active
+          </button>
+          <button className="others" type="button">
+            Completed
+          </button>
+          <button className="others" type="button">
+            Clear completed
+          </button>
         </div>
-        <button>Clear completed</button>
       </div>
     </div>
   );
