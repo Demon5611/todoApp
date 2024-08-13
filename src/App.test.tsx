@@ -1,22 +1,32 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom'; 
+import '@testing-library/jest-dom';
 import App from './App';
 
-test('adds a new task', () => {
+test('adds a new task', async () => {
   render(<App />);
+  
   const inputElement = screen.getByPlaceholderText(/what needs to be done/i);
   fireEvent.change(inputElement, { target: { value: 'New Task' } });
-  fireEvent.click(screen.getByText(/add task/i));
-  expect(screen.getByText(/new task/i)).toBeInTheDocument(); 
+  
+  // Симулируем отправку формы
+  fireEvent.submit(inputElement);
+  
+  // Ожидаем, что задача добавлена и отображается в списке
+  const taskElement = await screen.findByText('New Task');
+  expect(taskElement).toBeInTheDocument();
 });
 
-test('toggles task completion', () => {
+test('toggles task completion', async () => {
   render(<App />);
+  
   const inputElement = screen.getByPlaceholderText(/what needs to be done/i);
   fireEvent.change(inputElement, { target: { value: 'Toggle Task' } });
-  fireEvent.click(screen.getByText(/add task/i));
-  const checkbox = screen.getByRole('checkbox');
+  
+  // Симулируем отправку формы
+  fireEvent.submit(inputElement);
+  
+  const checkbox = await screen.findByRole('checkbox');
   fireEvent.click(checkbox);
-  expect(checkbox).toBeChecked(); 
+  expect(checkbox).toBeChecked();
 });

@@ -18,13 +18,17 @@ const TodoList: React.FC<TodoListProps> = ({ tasks, toggleTask }) => {
               type="checkbox"
               checked={task.completed}
               onChange={() => toggleTask(index)}
+              role="checkbox"
+             
             />
             <span className="checkbox">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M20.285 6.11l-11.667 11.667-4.903-4.903 1.586-1.586 3.317 3.317 10.081-10.081z"/>
-              </svg>
+              {task.completed && (
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path d="M20.285 6.11l-11.667 11.667-4.903-4.903 1.586-1.586 3.317 3.317 10.081-10.081z"/>
+                </svg>
+              )}
             </span>
-            {task.task}
+            <span className="task-text">{task.task}</span>
           </label>
         </li>
       ))}
