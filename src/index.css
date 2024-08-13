@@ -172,7 +172,7 @@ button:hover {
   cursor: pointer;
   font-weight: 500;
 
-  + button.others {
+  + .others {
     border: none;
     background-color: transparent;   
   }
