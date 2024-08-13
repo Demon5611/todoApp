@@ -5,23 +5,23 @@ import { useTasks } from "./useTasks";
 const App: React.FC = () => {
   const { tasks, newTask, setNewTask, addTask, toggleTask } = useTasks();
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      addTask();
-    }
+  const handleKeyPress: React.FormEventHandler<HTMLFormElement> = (event) => {
+   event?.preventDefault();
+   addTask();
   };
 
   return (
     <div className="app">
       <h1>todos</h1>
       <div className="wrapper">
-        <input
-          type="text"
-          value={newTask}
-          onChange={(e) => setNewTask(e.target.value)}
-          onKeyPress={handleKeyPress}
-          placeholder="What needs to be done?"
-        />
+      <form onSubmit={handleKeyPress}>
+  <input
+    type="text"
+    value={newTask}
+    onChange={(e) => setNewTask(e.target.value)}
+    placeholder="What needs to be done?"
+  />
+</form>
         <TodoList tasks={tasks} toggleTask={toggleTask} />
       </div>
       <div className="status-bar">
